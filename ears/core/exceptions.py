@@ -1,0 +1,5 @@
+
+
+
+class NotSupportedError(NotImplementedError):
+    pass
