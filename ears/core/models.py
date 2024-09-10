@@ -1,23 +1,8 @@
-from enum import Enum
 from typing import Any, Optional
 
 from pydantic import AnyHttpUrl, BaseModel
 
-from .types import URN
-
-
-class MusicResourceType(str, Enum):
-    """
-    Enumeration of music resource that can be manipulated through EARS.
-    """
-
-    playlist = "playlist"
-    """
-    """
-
-    track = "track"
-    """
-    """
+from .types import URN, MusicResourceType
 
 
 class MusicResource(BaseModel):
@@ -44,7 +29,7 @@ class MusicResource(BaseModel):
         return MusicResource(
             id=tokens[3],
             provider=tokens[1],
-            type=tokens[2],
+            type=tokens[2],  # type: ignore
         )
 
     def to_urn(self) -> URN:

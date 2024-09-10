@@ -1,18 +1,20 @@
-from typing import Any, Callable, TypeVar, Union
+from typing import Any, Callable, Literal, TypeVar, Union
 
 from httpx import AsyncClient, Client
 from pydantic import BaseModel
 
 Event = dict[str, Any]
 
-# TODO: bound to base type.
-ModelClass = TypeVar("ModelClass", bound=...)
+MusicResourceType = Literal["playlist", "track"]
 
+ProxyModelType = TypeVar(
+    "ProxyModelType"
+)  # , bound=...) # TODO: bound to base type.
 PydanticModel = TypeVar("PydanticModel", bound=BaseModel)
-
 PydanticEvent = Union[Event, BaseModel]
 
-TransportClass = TypeVar("_TransportClass", AsyncClient, Client)
+TransportClass = AsyncClient | Client
+TransportType = TypeVar("TransportType", AsyncClient, Client)
 
 URN = str
 

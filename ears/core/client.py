@@ -1,6 +1,7 @@
 from typing import Protocol
 
-from .transport import TransportClass, TransportFactory
+from .transport import TransportFactory
+from .types import TransportClass
 
 
 class ClientProtocol(Protocol):

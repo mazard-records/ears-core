@@ -15,7 +15,7 @@ def on_broadcast_playlist_event(
     """ """
     event_publisher = event_publisher_factory.create(destination)
     playlist_event = event_receiver.receive(event, PlaylistEvent)
-    tracks = provider.get_playlist(playlist_event.playlist_urn)
+    tracks = provider.get_playlist(playlist_event.playlist)
     for track in tracks:
         event_publisher.publish(track)
 
@@ -28,18 +28,22 @@ def on_update_playlist_event(
     """ """
     playlist_event = event_receiver.receive(event, PlaylistEvent)
     if playlist_event.action == PlaylistAction.add:
+        if playlist_event.track is None:
+            raise ValueError()
         provider.add_to_playlist(
             playlist_event.playlist,
             playlist_event.track,
         )
     elif playlist_event.action == PlaylistAction.remove:
+        if playlist_event.track is None:
+            raise ValueError()
         provider.remove_from_playlist(
             playlist_event.playlist,
             playlist_event.track,
         )
 
 
-def on_search_event(
+def on_search_track_event(
     provider: MusicProviderProtocol,
     event: Event,
     event_publisher_factory: EventPublisherFactory,
@@ -49,7 +53,7 @@ def on_search_event(
     """ """
     event_publisher = event_publisher_factory.create(destination)
     query = event_receiver.receive(event, Track)
-    results = provider.search(query.metadata)
+    results = provider.search_track(query.metadata)
     if len(results) == 0:
         # TODO: figure out what to do here ?
         return
