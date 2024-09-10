@@ -1,14 +1,13 @@
 from typing import Optional, Protocol
 
 from .exceptions import NotSupportedError
-from .models import Resource, Track, TrackSearchQuery
+from .models import MusicResource, Track, TrackSearchQuery
 from .types import URN
 
 
 class MusicProviderProtocol(Protocol):
-    """
-    """
-    
+    """ """
+
     name: str
     """ """
 
@@ -28,15 +27,14 @@ class MusicProviderProtocol(Protocol):
         """ """
         pass
 
-    def parse_urn(self, urn: URN) -> Resource:
+    def parse_urn(self, urn: URN) -> MusicResource:
         """ """
         pass
 
 
 class BaseMusicProvider(MusicProviderProtocol):
-    """
-    """
-    
+    """ """
+
     def get_playlist(self, playlist_urn: URN) -> list[Track]:
         raise NotSupportedError()
 
@@ -49,10 +47,11 @@ class BaseMusicProvider(MusicProviderProtocol):
     def search_track(self, query: TrackSearchQuery) -> list[Track]:
         raise NotSupportedError()
 
-    def parse_urn(self, urn: Optional[str]) -> Resource:
-        resource = Resource.from_urn(urn)
+    def parse_urn(self, urn: Optional[str]) -> MusicResource:
+        resource = MusicResource.from_urn(urn)
         if resource.provider != self.name:
             raise ValueError(
-                f"Provider mismatch, expected {self.name}," f" got {resource.provider}"
+                f"Provider mismatch, expected {self.name},"
+                f" got {resource.provider}"
             )
         return resource

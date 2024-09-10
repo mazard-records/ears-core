@@ -9,20 +9,27 @@ class EventPublisher(Protocol):
     """
 
     def publish(self, event: PydanticEvent) -> None:
+        """ """
         pass
 
 
 class EventPublisherFactory(Protocol):
-    pass
+    """ """
+
+    def create(self, topic: str) -> EventPublisher:
+        """ """
+        pass
 
 
 class EventReceiver(Protocol):
     """
     Protocol for message handling.
     """
+
     def receive(
         self,
         event: Event,
         model: Type[PydanticModel],
     ) -> PydanticModel:
+        """ """
         pass

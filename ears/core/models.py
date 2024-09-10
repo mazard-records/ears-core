@@ -3,22 +3,33 @@ from typing import Any, Optional
 
 from pydantic import AnyHttpUrl, BaseModel
 
+from .types import URN
 
-class ResourceType(str, Enum):
+
+class MusicResourceType(str, Enum):
+    """
+    Enumeration of music resource that can be manipulated through EARS.
+    """
+
     playlist = "playlist"
+    """
+    """
+
     track = "track"
+    """
+    """
 
 
-class Resource(BaseModel):
+class MusicResource(BaseModel):
     id: Any
     provider: str
-    type: ResourceType
+    type: MusicResourceType
     url: Optional[AnyHttpUrl] = None
 
     @classmethod
-    def from_urn(cls, urn: Optional[str]) -> "Resource":
+    def from_urn(cls, urn: Optional[URN]) -> "MusicResource":
         """
-        Parse the given URN into a target TrackSource.
+        Parse the given URN into a target MusicResource.
         Such URN are designed as follow:
 
         urn:PROVIDER:TYPE:IDENTIFIER
@@ -30,13 +41,13 @@ class Resource(BaseModel):
         tokens = urn.split(":")
         if len(tokens) != 4 or tokens[0] != "urn":
             raise ValueError(f"Invalid urn {urn}")
-        return Resource(
+        return MusicResource(
             id=tokens[3],
             provider=tokens[1],
             type=tokens[2],
         )
 
-    def to_urn(self) -> str:
+    def to_urn(self) -> URN:
         return f"urn:{self.provider}:{self.type}:{self.id}"
 
 
@@ -53,10 +64,10 @@ class TrackMetadata(TrackSearchQuery):
 
 class Track(BaseModel):
     metadata: TrackMetadata
-    resource: Resource
+    resource: MusicResource
 
 
 class TrackMatching(BaseModel):
-    origin: Resource
-    destination: Resource
+    origin: MusicResource
+    destination: MusicResource
     metadata: Optional[TrackMetadata] = None

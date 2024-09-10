@@ -1,5 +1,5 @@
 from .events import PlaylistAction, PlaylistEvent
-from .messaging import EventPublisher, pydantic_model_from_event
+from .messaging import EventPublisherFactory, EventReceiver
 from .models import Track, TrackMatching
 from .provider import MusicProviderProtocol
 from .types import Event
@@ -8,44 +8,52 @@ from .types import Event
 def on_broadcast_playlist_event(
     provider: MusicProviderProtocol,
     event: Event,
+    event_publisher_factory: EventPublisherFactory,
+    event_receiver: EventReceiver,
     destination: str,
 ) -> None:
-    playlist_event = pydantic_model_from_event(PlaylistEvent, event)
+    """ """
+    event_publisher = event_publisher_factory.create(destination)
+    playlist_event = event_receiver.receive(event, PlaylistEvent)
     tracks = provider.get_playlist(playlist_event.playlist_urn)
-    publisher = EventPublisher(destination)
     for track in tracks:
-        publisher(track)
+        event_publisher.publish(track)
 
 
 def on_update_playlist_event(
     provider: MusicProviderProtocol,
     event: Event,
+    event_receiver: EventReceiver,
 ) -> None:
-    playlist_event = pydantic_model_from_event(PlaylistEvent, event)
+    """ """
+    playlist_event = event_receiver.receive(event, PlaylistEvent)
     if playlist_event.action == PlaylistAction.add:
         provider.add_to_playlist(
-            playlist_event.playlist_urn,
-            playlist_event.track_urn,
+            playlist_event.playlist,
+            playlist_event.track,
         )
     elif playlist_event.action == PlaylistAction.remove:
         provider.remove_from_playlist(
-            playlist_event.playlist_urn,
-            playlist_event.track_urn,
+            playlist_event.playlist,
+            playlist_event.track,
         )
 
 
 def on_search_event(
     provider: MusicProviderProtocol,
     event: Event,
+    event_publisher_factory: EventPublisherFactory,
+    event_receiver: EventReceiver,
     destination: str,
 ) -> None:
-    query = pydantic_model_from_event(Track, event)
+    """ """
+    event_publisher = event_publisher_factory.create(destination)
+    query = event_receiver.receive(event, Track)
     results = provider.search(query.metadata)
     if len(results) == 0:
         # TODO: figure out what to do here ?
         return
-    publisher = EventPublisher(destination)
-    publisher(
+    event_publisher.publish(
         TrackMatching(
             origin=query.resource,
             destination=results[0].resource,
