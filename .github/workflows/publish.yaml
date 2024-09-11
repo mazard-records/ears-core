@@ -3,11 +3,11 @@ name: publish
 on:
   release:
     types:
-      - prereleased
       - published
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  pypi:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

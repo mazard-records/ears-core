@@ -29,6 +29,5 @@ mypy-check:
 unit-tests:
 	poetry run pytest $(TESTS) $(PYTEST_OPTS)
 
-
 lint: isort-format ruff-format
 qa: isort-check ruff-check mypy-check unit-tests
