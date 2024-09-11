@@ -17,5 +17,5 @@ jobs:
           python-version: "3.12"
       - run: poetry install --no-root
       - run: poetry build
-      - run: poetry config pypi-token.pypi "${{ secrets.PYPI_API_TOKEN_ORGANIZATION }}"
+      - run: poetry config pypi-token.pypi "${{ secrets.PYPI_API_TOKEN_REPOSITORY }}"
       - run: poetry publish
