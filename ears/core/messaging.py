@@ -1,6 +1,6 @@
 from typing import Protocol, Type
 
-from .types import Event, PydanticEvent, PydanticModel
+from .types import Event, PydanticModelType
 
 
 class EventPublisher(Protocol):
@@ -8,7 +8,7 @@ class EventPublisher(Protocol):
     Protocol for message publishing.
     """
 
-    def publish(self, event: PydanticEvent) -> None:
+    def publish(self, event: PydanticModelType) -> None:
         """ """
         pass
 
@@ -29,7 +29,7 @@ class EventReceiver(Protocol):
     def receive(
         self,
         event: Event,
-        model: Type[PydanticModel],
-    ) -> PydanticModel:
+        model: Type[PydanticModelType],
+    ) -> PydanticModelType:
         """ """
         pass

@@ -1,7 +1,7 @@
-from typing import Protocol
+from typing import Any, Generic, Protocol
 
 from .transport import TransportFactory
-from .types import TransportClass
+from .types import PydanticModelType, TransportClass
 
 
 class ClientProtocol(Protocol):
@@ -35,3 +35,21 @@ class BaseClient(ClientProtocol):
             self.transport = transport_or_factory.create()
         else:
             self.transport = transport_or_factory
+
+
+class ClientModelProxy(Generic[PydanticModelType]):
+    """Base proxy class for client extension object."""
+
+    transport: TransportClass
+
+    def __init__(
+        self,
+        transport: TransportClass,
+        model: PydanticModelType,
+    ) -> None:
+        self.model = model
+        self.transport = transport
+
+    def __getattr__(self, attr: str) -> Any:
+        # TODO: check if exist first.
+        return getattr(self.model, attr)

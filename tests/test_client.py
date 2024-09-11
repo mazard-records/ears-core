@@ -1,7 +1,8 @@
 from httpx import Client
+from pydantic import BaseModel
 from pytest_mock import MockerFixture
 
-from ears.core.client import BaseClient
+from ears.core.client import BaseClient, ClientModelProxy
 from ears.core.transport import TransportFactory
 from ears.core.types import TransportClass
 
@@ -24,3 +25,20 @@ def test_base_client_init_with_transport_factory(mocker: MockerFixture) -> None:
     client = BaseClient(transport_factory)
     transport_factory_spy.assert_called_once()
     assert client.transport == transport
+
+
+class ModelMock(BaseModel):
+    foo: str
+
+
+class ClientModelProxyMock(ClientModelProxy[ModelMock]):
+    pass
+
+
+def test_attribute_proxy() -> None:
+    model = ModelMock(foo="bar")
+    transport = Client()
+    proxy = ClientModelProxyMock(transport, model)
+    assert proxy.model == model
+    assert proxy.transport == transport
+    assert proxy.foo == "bar"

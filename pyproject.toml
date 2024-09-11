@@ -2,7 +2,7 @@
 authors = ["fvoituret <contact@mazard-records.fr>"]
 name = "ears-core"
 description = "Core design for EARS architecture"
-version = "0.1.0a4"
+version = "0.1.0a5"
 license = "MIT"
 package-mode = true
 packages = [
