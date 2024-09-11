@@ -1,9 +1,15 @@
 [tool.poetry]
-name = "ears-core"
-version = "0.1.0"
-description = "Core design for EARS architecture"
 authors = ["fvoituret <contact@mazard-records.fr>"]
+name = "ears-core"
+description = "Core design for EARS architecture"
+version = "0.1.0"
+license = "MIT"
+package-mode = true
+packages = [
+    { include = "ears" },
+]
 readme = "README.md"
+repository = "https://github.com/mazard-records/ears-core"
 
 [tool.poetry.dependencies]
 python = "^3.12"
