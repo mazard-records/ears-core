@@ -1,4 +1,4 @@
-from typing import Optional, Protocol
+from typing import Optional, Protocol, Sequence
 
 from .exceptions import NotSupportedError
 from .models import MusicResource, Track, TrackSearchQuery
@@ -11,7 +11,7 @@ class MusicProviderProtocol(Protocol):
     name: str
     """ """
 
-    def get_playlist(self, playlist_urn: URN) -> list[Track]:
+    def get_playlist(self, playlist_urn: URN) -> Sequence[Track]:
         """ """
         pass
 
@@ -23,7 +23,7 @@ class MusicProviderProtocol(Protocol):
         """ """
         pass
 
-    def search_track(self, query: TrackSearchQuery) -> list[Track]:
+    def search_track(self, query: TrackSearchQuery) -> Sequence[Track]:
         """ """
         pass
 
@@ -35,7 +35,7 @@ class MusicProviderProtocol(Protocol):
 class BaseMusicProvider(MusicProviderProtocol):
     """ """
 
-    def get_playlist(self, playlist_urn: URN) -> list[Track]:
+    def get_playlist(self, playlist_urn: URN) -> Sequence[Track]:
         raise NotSupportedError()
 
     def add_to_playlist(self, playlist_urn: URN, track_urn: URN) -> None:
@@ -44,7 +44,7 @@ class BaseMusicProvider(MusicProviderProtocol):
     def remove_from_playlist(self, playlist_urn: URN, track_urn: URN) -> None:
         raise NotSupportedError()
 
-    def search_track(self, query: TrackSearchQuery) -> list[Track]:
+    def search_track(self, query: TrackSearchQuery) -> Sequence[Track]:
         raise NotSupportedError()
 
     def parse_urn(self, urn: Optional[str]) -> MusicResource:

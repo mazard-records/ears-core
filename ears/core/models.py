@@ -1,5 +1,5 @@
 from enum import StrEnum
-from typing import Any, Optional
+from typing import Any, Optional, Sequence
 
 from pydantic import AnyHttpUrl, BaseModel
 
@@ -56,6 +56,9 @@ class TrackMetadata(TrackSearchQuery):
 class Track(BaseModel):
     metadata: TrackMetadata
     resource: MusicResource
+
+
+EMPTY_TRACK_SEQUENCE: Sequence[Track] = ()
 
 
 class TrackMatching(BaseModel):
