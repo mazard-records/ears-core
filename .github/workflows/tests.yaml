@@ -15,13 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: pipx install poetry
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "${{ matrix.python-version }}"
           cache: "poetry"
       - run: poetry install --no-root
-      - run: make qa ="${{ matrix.python-version }}"
-      - uses: actions/upload-artifact@v3
+      - run: make qa PY_VERSION="${{ matrix.python-version }}"
+      - uses: actions/upload-artifact@v4
         with:
           name: pytest-results-${{ matrix.python-version }}
           path: .junit/test-results-${{ matrix.python-version }}.xml
