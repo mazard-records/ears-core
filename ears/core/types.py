@@ -1,11 +1,9 @@
-from typing import Any, Callable, Literal, TypeVar, Union
+from typing import Any, Callable, TypeVar, Union
 
 from httpx import AsyncClient, Client
 from pydantic import BaseModel
 
 Event = dict[str, Any]
-
-MusicResourceType = Literal["playlist", "track"]
 
 ProxyModelType = TypeVar(
     "ProxyModelType"

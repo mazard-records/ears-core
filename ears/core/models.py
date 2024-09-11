@@ -1,8 +1,14 @@
+from enum import StrEnum
 from typing import Any, Optional
 
 from pydantic import AnyHttpUrl, BaseModel
 
-from .types import URN, MusicResourceType
+from .types import URN
+
+
+class MusicResourceType(StrEnum):
+    playlist = "playlist"
+    track = "track"
 
 
 class MusicResource(BaseModel):
