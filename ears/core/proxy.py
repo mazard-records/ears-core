@@ -1,18 +1,17 @@
 from typing import Any, Generic
 
-from httpx import AsyncClient, Client
 
-from .types import ProxyModelType, TransportClass, TransportType
+from .types import ProxyModelType, TransportClass
 
 
-class BaseProxy(Generic[TransportType, ProxyModelType]):
+class BaseProxy(Generic[ProxyModelType]):
     """Base proxy class for client extension object."""
 
     transport: TransportClass
 
     def __init__(
         self,
-        transport: TransportType,
+        transport: TransportClass,
         model: ProxyModelType,
     ) -> None:
         self.model = model
@@ -23,9 +22,5 @@ class BaseProxy(Generic[TransportType, ProxyModelType]):
         return getattr(self.model, attr)
 
 
-class BaseClientProxy(BaseProxy[Client, ProxyModelType]):
-    pass
-
-
-class BaseAsyncClientProxy(BaseProxy[AsyncClient, ProxyModelType]):
+class BaseClientProxy(BaseProxy[ProxyModelType]):
     pass

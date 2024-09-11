@@ -1,6 +1,6 @@
 from typing import Any, Callable, TypeVar, Union
 
-from httpx import AsyncClient, Client
+from httpx import Client
 from pydantic import BaseModel
 
 Event = dict[str, Any]
@@ -11,8 +11,7 @@ ProxyModelType = TypeVar(
 PydanticModel = TypeVar("PydanticModel", bound=BaseModel)
 PydanticEvent = Union[Event, BaseModel]
 
-TransportClass = AsyncClient | Client
-TransportType = TypeVar("TransportType", AsyncClient, Client)
+TransportClass = Client
 
 URN = str
 
