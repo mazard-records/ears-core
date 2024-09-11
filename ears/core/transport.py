@@ -1,8 +1,9 @@
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from .types import TransportClass
 
 
+@runtime_checkable
 class TransportFactory(Protocol):
     """
     A protocol for object that aims to create ready to use transport instance.

@@ -31,7 +31,7 @@ class BaseClient(ClientProtocol):
                 Either a ready to use transport instance, or a factory
                 instance that can be used to create the delegate transport.
         """
-        if isinstance(transport_or_factory, TransportClass):
-            self.transport = transport_or_factory
-        else:
+        if isinstance(transport_or_factory, TransportFactory):
             self.transport = transport_or_factory.create()
+        else:
+            self.transport = transport_or_factory

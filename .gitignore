@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 xunit.xml
 .ruff_cache
+.junit

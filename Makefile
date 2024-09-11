@@ -1,20 +1,32 @@
 SRC := ears
 TESTS := tests
 
-PYTEST_OPTS := --doctest-modules
-# PYTEST_OPTS += "--junitxml=junit/test-results-3.12.xml"
+MYPY_OPTS := --strict
+MYPY_OPTS += --namespace-packages
+MYPY_OPTS += --explicit-package-bases
 
-isort:
+PYTEST_OPTS := --doctest-modules
+PYTEST_OPTS += "--junitxml=.junit/test-results-3.12.xml"
+
+isort-check:
+	poetry run isort --check $(SRC) $(TESTS)
+
+isort-format:
 	poetry run isort $(SRC) $(TESTS)
 
-ruff:
+ruff-check:
+	poetry run ruff check $(SRC) $(TESTS)
+
+ruff-format:
 	poetry run ruff format $(SRC) $(TESTS)
 	poetry run ruff check --fix $(SRC) $(TESTS)
 
-lint: isort ruff
+mypy-check:
+	poetry run mypy $(MYPY_OPTS) $(SRC) $(TESTS)
 
-qa:
-	poetry run isort --check $(SRC) $(TESTS)
-	poetry run ruff check $(SRC) $(TESTS)
-	poetry run mypy --strict $(SRC) $(TESTS)
+unit-tests:
 	poetry run pytest $(TESTS) $(PYTEST_OPTS)
+
+
+lint: isort-format ruff-format
+qa: isort-check ruff-check mypy-check unit-tests
