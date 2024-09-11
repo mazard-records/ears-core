@@ -9,13 +9,16 @@ on:
 jobs:
   pypi:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - run: pipx install poetry
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: poetry install --no-root
+      - run: poetry install --no-root --without dev
       - run: poetry build
-      - run: poetry config pypi-token.pypi "${{ secrets.PYPI_API_TOKEN_REPOSITORY }}"
-      - run: poetry publish
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
