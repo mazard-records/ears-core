@@ -1,12 +1,14 @@
 SRC := ears
 TESTS := tests
 
+PY_VERSION = "3.12"
+
 MYPY_OPTS := --strict
 MYPY_OPTS += --namespace-packages
 MYPY_OPTS += --explicit-package-bases
 
 PYTEST_OPTS := --doctest-modules
-PYTEST_OPTS += "--junitxml=.junit/test-results-3.12.xml"
+PYTEST_OPTS += "--junitxml=.junit/test-results-$(PY_VERSION).xml"
 
 isort-check:
 	poetry run isort --check $(SRC) $(TESTS)
