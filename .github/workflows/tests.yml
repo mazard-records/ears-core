@@ -21,8 +21,7 @@ jobs:
           cache: "poetry"
       - run: poetry install --no-root
       - run: make qa PY_VERSION="${{ matrix.python-version }}"
-      - uses: actions/upload-artifact@v4
+      - uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
-          name: pytest-results-${{ matrix.python-version }}
-          path: .junit/test-results-${{ matrix.python-version }}.xml
-        if: ${{ always() }}
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: .junit/test-results-${{ matrix.python-version }}.xml
