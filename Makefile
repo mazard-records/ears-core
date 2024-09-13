@@ -1,14 +1,13 @@
 SRC := ears
 TESTS := tests
 
-PY_VERSION = "3.12"
-
 MYPY_OPTS := --strict
 MYPY_OPTS += --namespace-packages
 MYPY_OPTS += --explicit-package-bases
 
 PYTEST_OPTS := --doctest-modules
-PYTEST_OPTS += "--junitxml=.junit/test-results-$(PY_VERSION).xml"
+PYTEST_OPTS += --cov-report xml
+PYTEST_OPTS += --cov=ears.core tests/
 
 ruff-check:
 	poetry run ruff check $(SRC) $(TESTS)
