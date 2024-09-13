@@ -2,7 +2,7 @@
 authors = ["fvoituret <contact@mazard-records.fr>"]
 name = "ears-core"
 description = "Core design for EARS architecture"
-version = "0.1.0a5"
+version = "0.1.0b0"
 license = "MIT"
 package-mode = true
 packages = [
@@ -24,6 +24,9 @@ pytest-asyncio = "^0.24.0"
 pytest-httpx = "^0.30.0"
 pytest-mock = "^3.14.0"
 ruff = "^0.6.4"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

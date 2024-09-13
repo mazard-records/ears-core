@@ -35,7 +35,7 @@ class MusicResource(BaseModel):
         return MusicResource(
             id=tokens[3],
             provider=tokens[1],
-            type=tokens[2],  # type: ignore
+            type=tokens[2],
         )
 
     def to_urn(self) -> URN:
