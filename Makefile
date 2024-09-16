@@ -1,25 +1,16 @@
+FUNCTIONS := functions
 SRC := ears
 TESTS := tests
 
-MYPY_OPTS := --strict
-MYPY_OPTS += --namespace-packages
-MYPY_OPTS += --explicit-package-bases
+POETRY := poetry
+TERRAFORM := terraform
+TERRAFORM += --chdir=terraform
 
-PYTEST_OPTS := --doctest-modules
-PYTEST_OPTS += --cov-report xml
-PYTEST_OPTS += --cov=ears.core tests/
+version:
+	$(POETRY) version --short
 
-ruff-check:
-	poetry run ruff check $(SRC) $(TESTS)
+include bin/bld-lint.mk"
+include bin/bld-qa.mk"
+include bin/bld-tests.mk"
 
-mypy-check:
-	poetry run mypy $(MYPY_OPTS) $(SRC) $(TESTS)
-
-unit-tests:
-	poetry run pytest $(TESTS) $(PYTEST_OPTS)
-
-lint:
-	poetry run ruff format $(SRC) $(TESTS)
-	poetry run ruff check --fix $(SRC) $(TESTS)
-
-qa: ruff-check mypy-check unit-tests
+all: lint-all tests-all

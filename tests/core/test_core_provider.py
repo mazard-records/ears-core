@@ -3,7 +3,7 @@ import pytest
 from ears.exceptions import NotSupportedError
 from ears.core.provider import BaseMusicProvider
 
-from .const import (
+from ..const import (
     TEST_INVALID_PROVIDER_URNS,
     TEST_INVALID_URNS,
     TEST_TRACK_SEARCH_QUERY,

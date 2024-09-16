@@ -1,7 +1,7 @@
 import json
 from base64 import b64decode
 from concurrent.futures import Future
-from functools import partial
+from functools import lru_cache, partial
 from typing import Any, Type, cast
 
 from ears.protocols.messaging import (
@@ -38,7 +38,7 @@ class GoogleEventPublisher(EventPublisher):
         future.result()
 
 
-class GoogleEventPublisherFactory(EventPublisherFactory):
+class _GoogleEventPublisherFactory(EventPublisherFactory):
     """ """
 
     def __init__(self) -> None:
@@ -53,6 +53,11 @@ class GoogleEventPublisherFactory(EventPublisherFactory):
                 f"projects/{self._settings.project}/topics/{topic}",
             )
         return self._publishers[topic]
+
+
+@lru_cache(maxsize=1)
+def GoogleEventPublisherFactory() -> _GoogleEventPublisherFactory:
+    return _GoogleEventPublisherFactory()
 
 
 class GoogleEventReceiver(EventReceiver):

@@ -18,7 +18,7 @@ from ears.protocols.messaging import (
     EventReceiver,
 )
 
-from .const import (
+from ..const import (
     TEST_DESTINATION,
     TEST_EVENT,
     TEST_TRACK,

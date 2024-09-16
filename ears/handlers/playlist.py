@@ -1,14 +1,12 @@
-from .events import PlaylistAction, PlaylistEvent
-from .models import Track, TrackMatching
-from .provider import BaseMusicProvider
-
+from ..core.events import PlaylistAction, PlaylistEvent
+from ..core.provider import BaseMusicProvider
 from ..protocols.messaging import EventPublisherFactory, EventReceiver
 from ..types import Event
 
 
 def on_broadcast_playlist_event(
-    provider: BaseMusicProvider,
     event: Event,
+    provider: BaseMusicProvider,
     event_publisher_factory: EventPublisherFactory,
     event_receiver: EventReceiver,
     destination: str,
@@ -27,8 +25,8 @@ def on_broadcast_playlist_event(
 
 
 def on_update_playlist_event(
-    provider: BaseMusicProvider,
     event: Event,
+    provider: BaseMusicProvider,
     event_receiver: EventReceiver,
 ) -> None:
     """ """
@@ -53,26 +51,3 @@ def on_update_playlist_event(
             "expected 'add' or 'remove', "
             f"got '{playlist_event.action.value}'"
         )
-
-
-def on_search_track_event(
-    provider: BaseMusicProvider,
-    event: Event,
-    event_publisher_factory: EventPublisherFactory,
-    event_receiver: EventReceiver,
-    destination: str,
-) -> None:
-    """ """
-    event_publisher = event_publisher_factory.create(destination)
-    query = event_receiver.receive(event, Track)
-    results = provider.search_track(query.metadata)
-    if len(results) == 0:
-        # TODO: figure out what to do here ?
-        return
-    event_publisher.publish(
-        TrackMatching(
-            origin=query.resource,
-            destination=results[0].resource,
-            metadata=results[0].metadata,
-        )
-    )

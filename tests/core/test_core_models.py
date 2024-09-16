@@ -1,7 +1,7 @@
 from ears.core.models import MusicResource, MusicResourceType
 from pytest import raises
 
-from .const import (
+from ..const import (
     TEST_INVALID_URNS,
     TEST_VALID_TRACK_URN,
     TEST_VALID_TRACK_URN_ID,
