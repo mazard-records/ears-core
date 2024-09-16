@@ -2,13 +2,7 @@ from functools import wraps
 from hashlib import sha256
 from hmac import new as hmac
 from time import time
-from typing import Any, Callable, Coroutine, Mapping, Protocol, Union, cast
-
-from .blocks import Blocks
-
-AsyncWebhook = Callable[[Blocks], Coroutine[Any, Any, None]]
-StringProvider = Callable[..., str]
-Webhook = Callable[[Blocks], None]
+from typing import Any, Callable, Mapping, Protocol, Union, cast
 
 
 class RequestProtocol(Protocol):
@@ -23,6 +17,7 @@ class RequestProtocol(Protocol):
 
 
 Endpoint = Callable[[RequestProtocol], Any]
+StringProvider = Callable[..., str]
 
 
 class SlackHeaders(object):
