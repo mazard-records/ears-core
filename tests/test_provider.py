@@ -1,6 +1,6 @@
 import pytest
 
-from ears.core.exceptions import NotSupportedError
+from ears.exceptions import NotSupportedError
 from ears.core.provider import BaseMusicProvider
 
 from .const import (

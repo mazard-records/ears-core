@@ -1,6 +1,6 @@
 from typing import Protocol, runtime_checkable
 
-from .types import TransportClass
+from ..types import TransportClass
 
 
 @runtime_checkable

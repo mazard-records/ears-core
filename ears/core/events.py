@@ -3,7 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from .types import URN
+from ..types import URN
 
 
 class PlaylistAction(str, Enum):

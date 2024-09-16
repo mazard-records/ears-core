@@ -1,6 +1,6 @@
 from typing import Protocol, Type
 
-from .types import Event, PydanticModelType
+from ..types import Event, PydanticModelType
 
 
 class EventPublisher(Protocol):

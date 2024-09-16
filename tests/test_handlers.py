@@ -10,12 +10,13 @@ from ears.core.handlers import (
     on_search_track_event,
     on_update_playlist_event,
 )
-from ears.core.messaging import (
+from ears.core.models import Track
+from ears.core.provider import BaseMusicProvider
+
+from ears.protocols.messaging import (
     EventPublisherFactory,
     EventReceiver,
 )
-from ears.core.models import Track
-from ears.core.provider import BaseMusicProvider
 
 from .const import (
     TEST_DESTINATION,

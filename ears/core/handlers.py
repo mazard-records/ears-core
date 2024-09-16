@@ -1,12 +1,13 @@
 from .events import PlaylistAction, PlaylistEvent
-from .messaging import EventPublisherFactory, EventReceiver
 from .models import Track, TrackMatching
-from .provider import MusicProviderProtocol
-from .types import Event
+from .provider import BaseMusicProvider
+
+from ..protocols.messaging import EventPublisherFactory, EventReceiver
+from ..types import Event
 
 
 def on_broadcast_playlist_event(
-    provider: MusicProviderProtocol,
+    provider: BaseMusicProvider,
     event: Event,
     event_publisher_factory: EventPublisherFactory,
     event_receiver: EventReceiver,
@@ -26,7 +27,7 @@ def on_broadcast_playlist_event(
 
 
 def on_update_playlist_event(
-    provider: MusicProviderProtocol,
+    provider: BaseMusicProvider,
     event: Event,
     event_receiver: EventReceiver,
 ) -> None:
@@ -55,7 +56,7 @@ def on_update_playlist_event(
 
 
 def on_search_track_event(
-    provider: MusicProviderProtocol,
+    provider: BaseMusicProvider,
     event: Event,
     event_publisher_factory: EventPublisherFactory,
     event_receiver: EventReceiver,

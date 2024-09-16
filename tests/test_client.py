@@ -3,8 +3,8 @@ from pydantic import BaseModel
 from pytest_mock import MockerFixture
 
 from ears.core.client import BaseClient, ClientModelProxy
-from ears.core.transport import TransportFactory
-from ears.core.types import TransportClass
+from ears.protocols.transport import TransportFactory
+from ears.types import TransportClass
 
 
 def test_base_client_init_with_transport() -> None:

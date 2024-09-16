@@ -6,7 +6,7 @@ from ears.core.models import (
     TrackMetadata,
     TrackSearchQuery,
 )
-from ears.core.types import Event
+from ears.types import Event
 
 TEST_DESTINATION = "heaven"
 TEST_EVENT: Event = dict()

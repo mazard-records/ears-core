@@ -1,16 +1,8 @@
-from typing import Any, Generic, Protocol
+from typing import Any, Generic
 
-from .transport import TransportFactory
-from .types import PydanticModelType, TransportClass
-
-
-class ClientProtocol(Protocol):
-    """
-    A protocol for class that carries a transport to interact
-    with an external API.
-    """
-
-    transport: TransportClass
+from ..protocols.client import ClientProtocol
+from ..protocols.transport import TransportFactory
+from ..types import PydanticModelType, TransportClass
 
 
 class BaseClient(ClientProtocol):

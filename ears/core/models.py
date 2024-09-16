@@ -3,7 +3,7 @@ from typing import Any, Optional, Sequence
 
 from pydantic import AnyHttpUrl, BaseModel
 
-from .types import URN
+from ..types import URN
 
 
 class MusicResourceType(StrEnum):

@@ -1,39 +1,14 @@
 from typing import Optional, Protocol, Sequence
 
-from .exceptions import NotSupportedError
 from .models import MusicResource, Track, TrackSearchQuery
-from .types import URN
+from ..exceptions import NotSupportedError
+from ..types import URN
 
 
-class MusicProviderProtocol(Protocol):
+class BaseMusicProvider(Protocol):
     """ """
 
     name: str
-    """ """
-
-    def get_playlist(self, playlist_urn: URN) -> Sequence[Track]:
-        """ """
-        pass
-
-    def add_to_playlist(self, playlist_urn: URN, track_urn: URN) -> None:
-        """ """
-        pass
-
-    def remove_from_playlist(self, playlist_urn: URN, track_urn: URN) -> None:
-        """ """
-        pass
-
-    def search_track(self, query: TrackSearchQuery) -> Sequence[Track]:
-        """ """
-        pass
-
-    def parse_urn(self, urn: URN) -> MusicResource:
-        """ """
-        pass
-
-
-class BaseMusicProvider(MusicProviderProtocol):
-    """ """
 
     def get_playlist(self, playlist_urn: URN) -> Sequence[Track]:
         raise NotSupportedError()
