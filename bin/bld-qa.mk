@@ -2,7 +2,7 @@ MYPY_OPTS := --strict
 MYPY_OPTS += --namespace-packages
 MYPY_OPTS += --explicit-package-bases
 
-qa-function:
+qa-functions:
 	$(POETRY) run ruff check $(FUNCTIONS)
 	$(POETRY) run mypy $(MYPY_OPTS) $(FUNCTIONS)
 

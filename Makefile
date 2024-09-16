@@ -9,8 +9,8 @@ TERRAFORM += --chdir=terraform
 version:
 	$(POETRY) version --short
 
-include bin/bld-lint.mk"
-include bin/bld-qa.mk"
-include bin/bld-tests.mk"
+include bin/bld-lint.mk
+include bin/bld-qa.mk
+include bin/bld-tests.mk
 
 all: lint-all tests-all

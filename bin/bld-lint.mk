@@ -1,4 +1,4 @@
-lint-function:
+lint-functions:
 	$(POETRY) run ruff format $(FUNCTIONS)
 	$(POETRY) run ruff check --fix $(FUNCTIONS)
 
